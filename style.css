@@ -1,0 +1,31 @@
+body{
+  font-family:Arial;
+  text-align:center;
+  background:#ddd;
+}
+
+#board{
+  width:320px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(8,40px);
+  border:2px solid #333;
+}
+
+.cell{
+  width:40px;
+  height:40px;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.white{background:#eeeed2;}
+.black{background:#769656;}
+
+#quizBox,#gameBox{
+  display:none;
+  margin-top:10px;
+}

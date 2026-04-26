@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>سیستم شطرنج آموزشی مکتب</title>
+
+<style>
+body{
+  font-family:Arial;
+  text-align:center;
+  background:#ddd;
+}
+
+input,button{
+  padding:8px;
+  margin:5px;
+}
+
+#board{
+  width:320px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(8,40px);
+  border:2px solid #333;
+}
+
+.cell{
+  width:40px;
+  height:40px;
+  font-size:24px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+.white{background:#eeeed2;}
+.black{background:#769656;}
+
+#quizBox{
+  display:none;
+  position:fixed;
+  top:30%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:20px;
+  border:2px solid black;
+  border-radius:10px;
+}
+
+#status{
+  font-weight:bold;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>♟️🎓 سیستم شطرنج آموزشی مکتب</h2>
+
+<input id="student" placeholder="نام شاگرد">
+
+<button onclick="startGame()">شروع بازی</button>
+<button onclick="exportExcel()">📊 خروجی Excel</button>
+
+<div id="board"></div>
+<p id="status"></p>
+
+<!-- Quiz -->
+<div id="quizBox">
+  <p id="question"></p>
+  <input id="answer">
+  <br><br>
+  <button onclick="checkAnswer()">تایید</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+let boardDiv=document.getElementById("board");
+let quizBox=document.getElementById("quizBox");
+let question=document.getElementById("question");
+let answer=document.getElementById("answer");
+let status=document.getElementById("status");
+
+let from=null,to=null;
+
+let pieces=[
+["r","n","b","q","k","b","n","r"],
+["p","p","p","p","p","p","p","p"],
+["","","","","","","",""],
+["","","","","","","",""],
+["","","","","","","",""],
+["","","","","","","",""],
+["P","P","P","P","P","P","P","P"],
+["R","N","B","Q","K","B","N","R"]
+];
+
+let results=[];
+
+let studentName="";
+let score=0;
+let moves=0;
+
+function startGame(){
+  studentName=document.getElementById("student").value;
+  score=0;
+  moves=0;
+  draw();
+}
+
+function draw(){
+  boardDiv.innerHTML="";
+
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+
+      let cell=document.createElement("div");
+      cell.className="cell";
+
+      if((r+c)%2==0) cell.classList.add("white");
+      else cell.classList.add("black");
+
+      cell.innerHTML=sym(pieces[r][c]);
+
+      let sq=String.fromCharCode(97+c)+(8-r);
+
+      cell.onclick=()=>click(sq);
+
+      boardDiv.appendChild(cell);
+    }
+  }
+
+  status.innerText="نمره: "+score+" | حرکت‌ها: "+moves;
+}
+
+function sym(p){
+  let m={
+    p:"♟",r:"♜",n:"♞",b:"♝",q:"♛",k:"♚",
+    P:"♙",R:"♖",N:"♘",B:"♗",Q:"♕",K:"♔"
+  };
+  return m[p]||"";
+}
+
+function click(sq){
+  if(!from){
+    from=sq;
+  }else{
+    to=sq;
+    showQuiz();
+  }
+}
+
+// 🎓 سوالات
+function showQuiz(){
+
+  let q=[
+    {q:"2 + 2 = ?",a:"4"},
+    {q:"3 + 5 = ?",a:"8"},
+    {q:"رنگ آسمان چیست؟",a:"آبی"},
+    {q:"10 - 6 = ?",a:"4"},
+    {q:"شکل دایره چند ضلع دارد؟",a:"0"}
+  ];
+
+  let r=q[Math.floor(Math.random()*q.length)];
+
+  question.innerText=r.q;
+  quizBox.dataset.answer=r.a;
+
+  quizBox.style.display="block";
+}
+
+function checkAnswer(){
+
+  if(answer.value.trim()==quizBox.dataset.answer){
+
+    movePiece();
+    score+=10;
+
+  }else{
+    alert("❌ جواب اشتباه!");
+  }
+
+  quizBox.style.display="none";
+  answer.value="";
+}
+
+function movePiece(){
+
+  let fx=from.charCodeAt(0)-97;
+  let fy=8-parseInt(from[1]);
+
+  let tx=to.charCodeAt(0)-97;
+  let ty=8-parseInt(to[1]);
+
+  pieces[ty][tx]=pieces[fy][fx];
+  pieces[fy][fx]="";
+
+  from=null;
+  to=null;
+
+  moves++;
+
+  draw();
+}
+
+// 📊 Excel export
+function exportExcel(){
+
+  let data=[
+    {
+      Name:studentName,
+      Score:score,
+      Moves:moves
+    }
+  ];
+
+  let ws=XLSX.utils.json_to_sheet(data);
+  let wb=XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(wb,ws,"Results");
+
+  XLSX.writeFile(wb,"school_results.xlsx");
+}
+
+draw();
+</script>
+
+</body>
+</html>

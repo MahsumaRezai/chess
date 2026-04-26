@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>بازی آموزشی شطرنج</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>🎓♟️ سیستم شطرنج آموزشی</h2>
+
+<!-- 👤 نام شاگرد -->
+<div id="startBox">
+  <input id="name" placeholder="نام شاگرد">
+  <button onclick="start()">ثبت و شروع</button>
+</div>
+
+<!-- 🎓 سوال -->
+<div id="quizBox">
+  <h3 id="qText"></h3>
+  <input id="answer">
+  <button onclick="check()">تایید</button>
+</div>
+
+<!-- ♟️ بازی -->
+<div id="gameBox">
+  <div id="board"></div>
+</div>
+
+<script src="Script.js"></script>
+</body>
+</html>
