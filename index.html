@@ -2,31 +2,86 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>بازی آموزشی شطرنج</title>
-
+<title>طرح ارزیابی برای صنف سوم</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>🎓♟️ سیستم شطرنج آموزشی</h2>
-
-<!-- 👤 نام شاگرد -->
+<h2>طرح ارزیابی برای صنف سوم</h2>
 <div id="startBox">
   <input id="name" placeholder="نام شاگرد">
-  <button onclick="start()">ثبت و شروع</button>
+  <button onclick="start()">شروع</button>
 </div>
 
-<!-- 🎓 سوال -->
+<div id="info" style="display:none;">
+  نوبت: <span id="turn">سفید</span> |
+  امتیاز: <span id="score">0</span>
+</div>
+
 <div id="quizBox">
   <h3 id="qText"></h3>
   <input id="answer">
   <button onclick="check()">تایید</button>
 </div>
 
-<!-- ♟️ بازی -->
 <div id="gameBox">
   <div id="board"></div>
+
+  <button onclick="resetGame()">🔄 شروع دوباره</button>
+
+  <div class="captured">
+    <div>
+      <h4>سفیدهای گرفته‌شده</h4>
+      <div id="whiteOut"></div>
+    </div>
+    <div>
+      <h4>سیاه‌های گرفته‌شده</h4>
+      <div id="blackOut"></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>شطرنج آموزشی</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+<div id="info" style="display:none;">
+  نوبت: <span id="turn">سفید</span> |
+  امتیاز: <span id="score">0</span>
+</div>
+
+<div id="quizBox">
+  <h3 id="qText"></h3>
+  <input id="answer">
+  <button onclick="check()">تایید</button>
+</div>
+
+<div id="gameBox">
+  <div id="board"></div>
+
+  <button onclick="resetGame()">🔄 شروع دوباره</button>
+
+  <div class="captured">
+    <div>
+      <h4>سفیدهای گرفته‌شده</h4>
+      <div id="whiteOut"></div>
+    </div>
+    <div>
+      <h4>سیاه‌های گرفته‌شده</h4>
+      <div id="blackOut"></div>
+    </div>
+  </div>
 </div>
 
 <script src="Script.js"></script>

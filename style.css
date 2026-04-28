@@ -1,31 +1,118 @@
 body{
-  font-family:Arial;
+  font-family:tahoma;
   text-align:center;
-  background:#ddd;
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  margin:0;
+  padding:10px;
 }
 
-#board{
-  width:320px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(8,40px);
-  border:2px solid #333;
-}
-
-.cell{
-  width:40px;
-  height:40px;
+/* عنوان */
+h2{
+  margin-top:10px;
   font-size:22px;
+}
+
+/* ورودی‌ها */
+input{
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  width:80%;
+  max-width:250px;
+}
+
+/* دکمه */
+button{
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+  background:#007bff;
+  color:white;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+button:hover{
+  background:#0056b3;
+}
+
+/* اطلاعات */
+#info{
+  margin-top:10px;
+  font-size:16px;
+}
+
+/* شطرنج */
+#board{
+  width:90vw;
+  max-width:360px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  aspect-ratio:1/1;
+  border:4px solid #333;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+/* خانه‌ها */
+.cell{
+  font-size:clamp(16px,4vw,26px);
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  transition:0.2s;
 }
 
-.white{background:#eeeed2;}
-.black{background:#769656;}
+.cell:hover{
+  transform:scale(1.05);
+}
 
+.white{background:#f0d9b5;}
+.black{background:#b58863;}
+
+/* انتخاب */
+.selected{
+  outline:2px solid red;
+}
+
+/* مهره‌های گرفته‌شده */
+.captured{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+  margin-top:15px;
+}
+
+.captured div{
+  background:#ffffffcc;
+  padding:10px;
+  border-radius:10px;
+  min-width:140px;
+  max-width:90vw;
+}
+
+/* سوال */
 #quizBox,#gameBox{
   display:none;
   margin-top:10px;
+}
+
+/* موبایل کوچک */
+@media (max-width:480px){
+
+  h2{
+    font-size:18px;
+  }
+
+  .captured{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #board{
+    max-width:300px;
+  }
 }
