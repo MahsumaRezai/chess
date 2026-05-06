@@ -2,63 +2,28 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>طرح ارزیابی برای صنف سوم</title>
+<title>شطرنج آموزشی دو نفره</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>طرح ارزیابی برای صنف سوم</h2>
+<h2>🎓 شطرنج آموزشی دو نفره</h2>
+
 <div id="startBox">
-  <input id="name" placeholder="نام شاگرد">
-  <button onclick="start()">شروع</button>
+  <input id="name1" placeholder="نام شاگرد سفید">
+  <input id="name2" placeholder="نام شاگرد سیاه"><br>
+  <button onclick="start()">شروع بازی</button>
 </div>
 
-<div id="info" style="display:none;">
-  نوبت: <span id="turn">سفید</span> |
-  امتیاز: <span id="score">0</span>
-</div>
+<div id="info">
+  <div id="playerWhite"></div>
+  <div id="playerBlack"></div>
+  نوبت: <span id="turn">سفید</span><br>
+  امتیاز سفید: <span id="scoreWhite">0</span> |
+  امتیاز سیاه: <span id="scoreBlack">0</span><br><br>
 
-<div id="quizBox">
-  <h3 id="qText"></h3>
-  <input id="answer">
-  <button onclick="check()">تایید</button>
-</div>
-
-<div id="gameBox">
-  <div id="board"></div>
-
-  <button onclick="resetGame()">🔄 شروع دوباره</button>
-
-  <div class="captured">
-    <div>
-      <h4>سفیدهای گرفته‌شده</h4>
-      <div id="whiteOut"></div>
-    </div>
-    <div>
-      <h4>سیاه‌های گرفته‌شده</h4>
-      <div id="blackOut"></div>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
-</body>
-</html><!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>شطرنج آموزشی</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-
-
-<div id="info" style="display:none;">
-  نوبت: <span id="turn">سفید</span> |
-  امتیاز: <span id="score">0</span>
+  <button onclick="exportToExcel()">📥 دانلود نتایج</button>
 </div>
 
 <div id="quizBox">
@@ -69,19 +34,7 @@
 
 <div id="gameBox">
   <div id="board"></div>
-
   <button onclick="resetGame()">🔄 شروع دوباره</button>
-
-  <div class="captured">
-    <div>
-      <h4>سفیدهای گرفته‌شده</h4>
-      <div id="whiteOut"></div>
-    </div>
-    <div>
-      <h4>سیاه‌های گرفته‌شده</h4>
-      <div id="blackOut"></div>
-    </div>
-  </div>
 </div>
 
 <script src="Script.js"></script>
