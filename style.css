@@ -52,3 +52,20 @@ button{
 #quizBox,#gameBox,#info{
   display:none;
 }
+
+/* گزینه‌ها */
+.optionBtn{
+  display:block;
+  margin:5px auto;
+  padding:8px;
+  width:70%;
+  border-radius:6px;
+  border:none;
+  background:#28a745;
+  color:white;
+  cursor:pointer;
+}
+
+.optionBtn:hover{
+  background:#1e7e34;
+}

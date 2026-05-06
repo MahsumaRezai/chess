@@ -6,14 +6,36 @@ let board=[], from=null;
 let currentQ=null;
 let lastMove=null;
 
+// سوالات چندگزینه‌ای
 let questions = [
-  {q:"CPU چیست؟", a:"مغز کمپیوتر"},
-  {q:"RAM چیست؟", a:"حافظه موقت"},
-  {q:"HTML چیست؟", a:"زبان نشانه گذاری"},
-  {q:"CSS چیست؟", a:"طراحی صفحات"},
-  {q:"JavaScript چیست؟", a:"زبان برنامه نویسی"}
+  {
+    q:"CPU چیست؟",
+    options:["مغز کمپیوتر","صفحه نمایش","ماوس","پرینتر"],
+    a:"مغز کمپیوتر"
+  },
+  {
+    q:"RAM چیست؟",
+    options:["حافظه موقت","هارد دیسک","کیبورد","باتری"],
+    a:"حافظه موقت"
+  },
+  {
+    q:"HTML چیست؟",
+    options:["زبان نشانه گذاری","زبان برنامه نویسی","سیستم عامل","مرورگر"],
+    a:"زبان نشانه گذاری"
+  },
+  {
+    q:"CSS چیست؟",
+    options:["طراحی صفحات","بازی","شبکه","حافظه"],
+    a:"طراحی صفحات"
+  },
+  {
+    q:"JavaScript چیست؟",
+    options:["زبان برنامه نویسی","سیستم صوتی","نرم افزار","فایل"],
+    a:"زبان برنامه نویسی"
+  }
 ];
 
+// شروع بازی
 function start(){
   let name1 = document.getElementById("name1").value;
   let name2 = document.getElementById("name2").value;
@@ -39,6 +61,7 @@ function start(){
   startGame();
 }
 
+// شروع صفحه شطرنج
 function startGame(){
   board = [
     ["r","n","b","q","k","b","n","r"],
@@ -55,6 +78,7 @@ function startGame(){
   draw();
 }
 
+// رسم صفحه
 function draw(){
   let b=document.getElementById("board");
   b.innerHTML="";
@@ -68,6 +92,7 @@ function draw(){
 
       let cell=document.createElement("div");
       cell.className="cell";
+
       cell.classList.add((r+c)%2==0?"white":"black");
 
       let sq = String.fromCharCode(97+c)+(8-r);
@@ -82,6 +107,7 @@ function draw(){
   }
 }
 
+// حرکت مهره
 function move(sq){
 
   let x = sq.charCodeAt(0)-97;
@@ -118,17 +144,32 @@ function move(sq){
   showQuiz();
 }
 
+// نمایش سوال
 function showQuiz(){
   document.getElementById("quizBox").style.display="block";
+
   currentQ = questions[Math.floor(Math.random()*questions.length)];
+
   document.getElementById("qText").innerText = currentQ.q;
+
+  let old = document.querySelectorAll(".optionBtn");
+  old.forEach(e=>e.remove());
+
+  currentQ.options.forEach(opt=>{
+    let btn = document.createElement("button");
+    btn.innerText = opt;
+    btn.className = "optionBtn";
+
+    btn.onclick = ()=>checkAnswer(opt);
+
+    document.getElementById("quizBox").appendChild(btn);
+  });
 }
 
-function check(){
+// بررسی جواب
+function checkAnswer(selected){
 
-  let ans = document.getElementById("answer").value;
-
-  if(ans.trim()==currentQ.a){
+  if(selected == currentQ.a){
 
     alert("✔️ درست");
 
@@ -146,7 +187,6 @@ function check(){
 
     let fx = lastMove.from.charCodeAt(0)-97;
     let fy = 8-parseInt(lastMove.from[1]);
-
     let tx = lastMove.to.charCodeAt(0)-97;
     let ty = 8-parseInt(lastMove.to[1]);
 
@@ -155,11 +195,11 @@ function check(){
   }
 
   document.getElementById("quizBox").style.display="none";
-  document.getElementById("answer").value="";
 
   draw();
 }
 
+// مهره‌ها
 function symbol(p){
   let m={
     p:"♟",r:"♜",n:"♞",b:"♝",q:"♛",k:"♚",
@@ -168,23 +208,27 @@ function symbol(p){
   return m[p] || "";
 }
 
-function resetGame(){
-  startGame();
-}
-
+// ذخیره
 function saveData(){
   localStorage.setItem("students", JSON.stringify(students));
 }
 
+// ریست
+function resetGame(){
+  startGame();
+}
+
+// خروجی اکسل (CSV)
 function exportToExcel(){
   let data = "نام,امتیاز\n";
 
   students.forEach(s=>{
-    data += s.name + "," + s.score + "\\n";
+    data += s.name + "," + s.score + "\n";
   });
 
   let blob = new Blob([data], { type: "text/csv" });
   let url = URL.createObjectURL(blob);
+
   let a = document.createElement("a");
   a.href = url;
   a.download = "نتایج.csv";
